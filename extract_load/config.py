@@ -16,7 +16,7 @@ FRED_SERIES = {
 # lookback (covers weekends/holidays/late-arriving revisions); the raw
 # tables' unique constraints make re-pulling overlapping days a safe no-op
 # upsert, not a duplicate.
-LOOKBACK_DAYS = int(os.environ.get("LOOKBACK_DAYS", "10"))
+LOOKBACK_DAYS = int(os.environ.get("LOOKBACK_DAYS", "45"))
 
 # --- Secrets / connection ----------------------------------------------------
 # All read from environment. Locally: a .env file (see .env.example).
