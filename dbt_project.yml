@@ -1,0 +1,16 @@
+name: 'market_macro_pipeline'
+version: '1.0.0'
+config-version: 2
+
+profile: 'market_macro_pipeline'
+
+model-paths: ["models"]
+target-path: "target"
+clean-targets: ["target", "dbt_packages"]
+
+models:
+  market_macro_pipeline:
+    staging:
+      +materialized: view       # cheap, always-fresh reflection of raw
+    marts:
+      +materialized: table      # what Power BI actually queries

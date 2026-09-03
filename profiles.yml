@@ -1,0 +1,19 @@
+# dbt connection profile. Values are pulled from environment variables so
+# nothing here is a secret — this file is safe to commit.
+#
+# Locally: export the vars (or use `dotenv run`) before `dbt run`.
+# In CI/Docker: the same env vars are set from GitHub Actions secrets.
+
+market_macro_pipeline:
+  target: prod
+  outputs:
+    prod:
+      type: postgres
+      host: "{{ env_var('SUPABASE_DB_HOST') }}"
+      port: "{{ env_var('SUPABASE_DB_PORT', '5432') | as_number }}"
+      user: "{{ env_var('SUPABASE_DB_USER') }}"
+      password: "{{ env_var('SUPABASE_DB_PASSWORD') }}"
+      dbname: "{{ env_var('SUPABASE_DB_NAME', 'postgres') }}"
+      schema: public
+      threads: 4
+      sslmode: require

@@ -1,0 +1,19 @@
+# Secrets - never commit
+.env
+
+# dbt build artifacts
+target/
+dbt_packages/
+logs/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# OS/editor cruft
+.DS_Store
+.vscode/
+.idea/

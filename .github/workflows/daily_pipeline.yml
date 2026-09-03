@@ -1,0 +1,29 @@
+name: Daily ELT pipeline
+
+on:
+  schedule:
+    # 07:00 UTC daily, after US markets close for the prior session
+    - cron: "0 7 * * *"
+  workflow_dispatch: {}   # lets you trigger manually from the Actions tab
+
+jobs:
+  run-pipeline:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Build pipeline image
+        run: docker build -t market-macro-pipeline .
+
+      - name: Run pipeline (extract + load + dbt run + dbt test)
+        run: |
+          docker run --rm \
+            -e FRED_API_KEY="${{ secrets.FRED_API_KEY }}" \
+            -e SUPABASE_DB_URL="${{ secrets.SUPABASE_DB_URL }}" \
+            -e SUPABASE_DB_HOST="${{ secrets.SUPABASE_DB_HOST }}" \
+            -e SUPABASE_DB_PORT="${{ secrets.SUPABASE_DB_PORT }}" \
+            -e SUPABASE_DB_USER="${{ secrets.SUPABASE_DB_USER }}" \
+            -e SUPABASE_DB_PASSWORD="${{ secrets.SUPABASE_DB_PASSWORD }}" \
+            -e SUPABASE_DB_NAME="${{ secrets.SUPABASE_DB_NAME }}" \
+            market-macro-pipeline

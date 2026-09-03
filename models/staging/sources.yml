@@ -1,0 +1,23 @@
+version: 2
+
+sources:
+  - name: raw
+    schema: public
+    tables:
+      - name: raw_stock_prices
+        description: "Untouched daily OHLCV pulled from yfinance. No cleaning applied."
+        loaded_at_field: ingested_at
+        columns:
+          - name: ticker
+            tests: [not_null]
+          - name: price_date
+            tests: [not_null]
+
+      - name: raw_macro_indicators
+        description: "Untouched daily/monthly observations pulled from FRED. No cleaning applied."
+        loaded_at_field: ingested_at
+        columns:
+          - name: series_id
+            tests: [not_null]
+          - name: observation_date
+            tests: [not_null]
