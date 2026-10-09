@@ -1,0 +1,11 @@
+# Secrets and environment variables
+.env
+
+# Python virtual environment & cache
+venv/
+__pycache__/
+*.pyc
+
+# OS & IDE metadata
+.DS_Store
+.vscode/
