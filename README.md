@@ -77,13 +77,14 @@ Market-Macro-ELT-Pipeline/
 
 ---
 
-## 🚀 Local Setup & Installation
+## 🚀 Local Setup & Pipeline Execution
 
 ### 1. Prerequisites
 
 * Python 3.10+
 * Supabase PostgreSQL database
-* Docker (for local Metabase hosting)
+* Docker Desktop
+* Node.js / `npx` (for live public tunneling)
 
 ### 2. Environment Configuration
 
@@ -95,7 +96,7 @@ FRED_API_KEY=your_fred_api_key
 
 ```
 
-### 3. Execution
+### 3. Run Pipeline
 
 ```bash
 # Install dependencies
@@ -108,10 +109,35 @@ python pipeline.py
 
 ---
 
+## 🖥️ Dashboard Hosting & Public Demos
+
+### 1. Start Metabase via Docker
+
+Spin up a local Metabase container connected to port `3000`:
+
+```bash
+docker run -d -p 3000:3000 --name metabase metabase/metabase
+
+```
+
+Navigating to `http://localhost:3000` allows you to complete setup and link your Supabase database.
+
+### 2. Generate Live Public HTTPS Link (Cloudflare Tunnel)
+
+To share the dashboard live with recruiters or interviewers without cloud hosting fees:
+
+```bash
+npx cloudflared tunnel --url http://localhost:3000
+
+```
+
+This generates a temporary HTTPS URL (e.g., `https://<random-subdomain>.trycloudflare.com`) that streams your local Metabase instance publicly while the terminal session remains open.
+
+---
+
 ## 🔑 GitHub Actions Deployment
 
 To automate execution, configure these two encrypted secrets in your repository under **Settings > Secrets and variables > Actions**:
 
 * `SUPABASE_DB_URL`
-
 * `FRED_API_KEY`
