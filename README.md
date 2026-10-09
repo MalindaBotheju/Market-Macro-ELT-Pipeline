@@ -99,6 +99,10 @@ FRED_API_KEY=your_fred_api_key
 ### 3. Run Pipeline
 
 ```bash
+# Create virtual environment (if not created)
+python3 -m venv venv
+source venv/bin/activate
+
 # Install dependencies
 pip install -r requirements.txt
 
@@ -113,14 +117,23 @@ python pipeline.py
 
 ### 1. Start Metabase via Docker
 
-Spin up a local Metabase container connected to port `3000`:
+**First Time Setup:**
+To create and launch a new Metabase container on port `3000`:
 
 ```bash
 docker run -d -p 3000:3000 --name metabase metabase/metabase
 
 ```
 
-Navigating to `http://localhost:3000` allows you to complete setup and link your Supabase database.
+**Starting an Existing Container:**
+If you have already created the Metabase container, reuse your existing setup without losing dashboard configurations:
+
+```bash
+docker start metabase
+
+```
+
+Navigating to `http://localhost:3000` allows you to access the dashboard or connect to your Supabase instance.
 
 ### 2. Generate Live Public HTTPS Link (Cloudflare Tunnel)
 
